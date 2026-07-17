@@ -13,7 +13,7 @@ function ProgressBar({ progress = 0 }) {
           aria-valuemax={100}
           aria-valuenow={clamped}
           style={{ width: `${clamped}%` }}
-          className='bg-gradient-to-r from-blue-600 to-emerald-500 h-3 rounded-full transition-all duration-300 ease-linear'
+          className='bg-linear-to-r from-blue-600 to-emerald-500 h-3 rounded-full transition-all duration-300 ease-linear'
         />
       </div>
       <p className='mt-2'>{clamped}%</p>

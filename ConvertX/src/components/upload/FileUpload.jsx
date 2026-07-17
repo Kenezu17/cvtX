@@ -1,12 +1,96 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
+
+import { validateSize, validateType } from "../../utils/fileValidation";
+import { FILE_TYPES } from "../../utils/fileTypes";
+import { DownlaodFile } from "../../utils/DownloadFile";
+
 import FilePreview from "./FilePreview";
 import ConvertBtn from "../converter/ConvertBtn";
 import ConvertOptionBtn from "../converter/ConvertOptionBtn";
 import ProgressBar from "./ProgressBar";
 import DownloadBtn from "../converter/DownloadBtn";
+import ErrorMessage from "../ErrorMessage";
 
 export default function FileUpload() {
   const [file, setFile] = useState(null);
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const inputRef = useRef(null)
+  const [progress, setProgress] = useState(0)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [fromFormat, setFromFormat] = useState('pdf')
+  const [toFormat, setToFormat] = useState('docx')
+
+  const removeFile = () => {
+    setFile(null)
+  }
+
+  const handlefilechange = (e) => {
+    const selectFile = e.target.files[0]
+
+    if (!selectFile) return
+
+    setFile(selectFile)
+    setError('')
+  }
+
+  const handleOptionChange = (type, value) => {
+    if (type === 'from') {
+      setFromFormat(value)
+    } else {
+      setToFormat(value)
+    }
+  }
+
+  const handleConvert = async () => {
+    if (!file) {
+      setError('Please select a file')
+      return
+    }
+
+    const size = validateSize(file)
+
+    if (!size.valid) {
+      setError(size.message)
+      return
+    }
+
+    const formatMap = {
+      pdf: 'pdf',
+      docx: 'word',
+      jpg: 'image',
+      png: 'image',
+      excel: 'excel',
+      csv: 'csv',
+    }
+
+    const selectedType = FILE_TYPES[formatMap[fromFormat]] || []
+    const type = validateType(file, selectedType)
+
+    if (!type.valid) {
+      setError(type.message)
+      return
+    }
+
+    setError('')
+    setLoading(true)
+  }
+
+const handleDonwload = async()=>{
+   if(!isDownloading) return
+
+   setIsDownloading(true)
+   setError('')
+
+   const res = await DownlaodFile(file)
+
+   if(!res.success){
+      setError(res.message)
+   }
+
+   setIsDownloading(false)
+
+}
 
   return (
     <div className="bg-white rounded-3xl shadow-lg p-10">
@@ -17,7 +101,7 @@ export default function FileUpload() {
         <input
           type="file"
           hidden
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={handlefilechange}
         />
 
         <h2 className="text-2xl font-semibold">
@@ -29,17 +113,34 @@ export default function FileUpload() {
         </p>
       </label>
 
+      <ErrorMessage
+      message={error}
+      onClose={()=> setError('')}
+      />
+
       {file && (
         <>
-          <FilePreview file={file} />
+          <FilePreview 
+          onRemove={removeFile}
+          file={file} />
 
-          <ConvertOptionBtn />
+          <ConvertOptionBtn
+            fromFormat={fromFormat}
+            toFormat={toFormat}
+            onOptionChange={handleOptionChange}
+          />
 
-          <ConvertBtn />
+          <ConvertBtn 
+            loading={loading}
+            onClick={handleConvert}
+          />
 
-          <ProgressBar progress={0} />
+          <ProgressBar progress={progress} />
 
-          <DownloadBtn />
+          <DownloadBtn
+            loading={isDownloading}
+            onDowload={handleDonwload}
+          />
         </>
       )}
 
