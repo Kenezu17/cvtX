@@ -1,5 +1,6 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 
+import APIURL from "../../services/api";
 import { validateSize, validateType } from "../../utils/fileValidation";
 import { FILE_TYPES } from "../../utils/fileTypes";
 import { DownlaodFile } from "../../utils/DownloadFile";
@@ -18,6 +19,7 @@ export default function FileUpload() {
   const inputRef = useRef(null)
   const [progress, setProgress] = useState(0)
   const [isDownloading, setIsDownloading] = useState(false)
+  const [downloadFilename, setDownloadFilename] = useState('')
   const [fromFormat, setFromFormat] = useState('pdf')
   const [toFormat, setToFormat] = useState('docx')
 
@@ -74,22 +76,43 @@ export default function FileUpload() {
 
     setError('')
     setLoading(true)
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('convert_to', toFormat);
+
+      const response = await APIURL.post('/convert/', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      setProgress(100);
+      setError('');
+      setDownloadFilename(response.data.converted_filename);
+      setIsDownloading(false);
+    } catch (err) {
+      setError(err?.response?.data?.detail || 'Conversion failed');
+    } finally {
+      setLoading(false);
+    }
   }
 
 const handleDonwload = async()=>{
-   if(!isDownloading) return
+   if(!downloadFilename) {
+      setError('Convert the file first before downloading')
+      return
+   }
 
    setIsDownloading(true)
    setError('')
 
-   const res = await DownlaodFile(file)
+   const res = await DownlaodFile(downloadFilename)
 
    if(!res.success){
       setError(res.message)
    }
 
    setIsDownloading(false)
-
 }
 
   return (

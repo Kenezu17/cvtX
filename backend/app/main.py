@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers.convert import router as convert_router
-
+from .routers.convert import router as convert_router
+from .routers.download import router as download_router
 
 app = FastAPI(
     title='ConvertX',
@@ -17,6 +19,13 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+ 
+
+BASE_DIR = Path(__file__).resolve().parent
+(BASE_DIR / 'uploads').mkdir(parents=True, exist_ok=True)
+(BASE_DIR / 'output').mkdir(parents=True, exist_ok=True)
+
 app.include_router(convert_router)
+app.include_router(download_router)
 
 
