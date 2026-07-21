@@ -30,6 +30,16 @@ backend/.venv/
 backend/__pycache__/
 backend/.env
 
+# Local environment files
+ConvertX/.env
+backend/.env
+
+# Local virtual environments
+ConvertX/venv/
+ConvertX/.venv/
+backend/venv/
+backend/.venv/
+
 # Temporary files
 backend/uploads/*
 backend/outputs/*
