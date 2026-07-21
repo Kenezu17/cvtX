@@ -12,6 +12,8 @@ OUTPUT_DIR = BASE_DIR / "output"
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+print('hello')
+
 
 
 @router.post("/")
