@@ -82,7 +82,7 @@ export default function FileUpload() {
       formData.append('file', file);
       formData.append('convert_to', toFormat);
 
-      const response = await APIURL.post('/convert/', formData, {
+      const response = await APIURL.post('/convert', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
