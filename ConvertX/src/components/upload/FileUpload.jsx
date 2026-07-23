@@ -34,13 +34,16 @@ export default function FileUpload() {
 
     setFile(selectFile)
     setError('')
+    setProgress(0)
   }
 
   const handleOptionChange = (type, value) => {
     if (type === 'from') {
       setFromFormat(value)
+      setProgress(0)
     } else {
       setToFormat(value)
+      setProgress(0)
     }
   }
 
@@ -49,6 +52,7 @@ export default function FileUpload() {
       setError('Please select a file')
       return
     }
+    
 
     const size = validateSize(file)
 

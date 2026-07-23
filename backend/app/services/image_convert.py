@@ -1,28 +1,43 @@
 from PIL import Image
 import fitz
+from pathlib import Path
+import io
 
-def image_to_pdf(inputFile: str, filename: str):
-     
-     doc = fitz.open()
 
-     image = Image.open(inputFile)
-     pdfbytes = image.convert_to_pdf()
-     image.close()
-     
-     img_pdf = fitz.open('pdf', pdfbytes)
-     doc.insert_pdf(img_pdf)
-     img_pdf.close()
+def image_to_pdf(input_file: str, output_file: str):
+    image = Image.open(input_file)
 
-     doc.save(filename)
-     doc.close()
+    if image.mode != "RGB":
+        image = image.convert("RGB")
 
-     return filename
+    image.save(output_file, "PDF", resolution=100.0)
+    image.close()
 
-def jpg_to_png(inputFile: str, filename:str):
-     
-     image = Image.open(inputFile)
+    return output_file
 
-     image.save(filename)
 
-     return filename
+def jpg_to_png(input_file: str, output_file: str):
+    image = Image.open(input_file)
+    image.save(output_file, "PNG")
+    image.close()
 
+    return output_file
+
+def pdf_to_jpg(input_file: str, output_dir: str):
+    pdf = fitz.open(input_file)
+
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for page_num in range(len(pdf)):
+        page = pdf.load_page(page_num)
+        pix = page.get_pixmap(dpi=300)
+
+        image = Image.open(io.BytesIO(pix.tobytes("png")))
+
+        output_file = output_dir / f"page_{page_num + 1}.jpg"
+        image.convert("RGB").save(output_file, "JPEG", quality=95)
+
+    pdf.close()
+
+    return str(output_dir)

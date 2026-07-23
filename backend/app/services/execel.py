@@ -2,25 +2,46 @@ import shutil
 import subprocess
 from pathlib import Path
 
+SOFFICE_PATH = SOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
-def excel_to_pdf(input_path: str, output_dir: str):
-    if shutil.which("soffice") is None:
+def convert_with_libreoffice(inputPath: str, outputPath: str):
+    if not Path(SOFFICE_PATH).exists():
         raise RuntimeError(
-            "LibreOffice 'soffice' is required for Excel/PDF conversion. Install LibreOffice and ensure it is on your PATH."
+            f"LibreOffice not found: {SOFFICE_PATH}"
         )
+
+    output_dir = outputPath.parent
 
     subprocess.run(
         [
-            "soffice",
-            "--headless",
-            "--convert-to",
-            "pdf",
-            "--outdir",
-            output_dir,
-            input_path,
+            SOFFICE_PATH,
+            '--headless',
+            '--convert-to',
+            'pdf',
+            '--outdir',
+            str(output_dir),
+            str(inputPath),
         ],
         check=True,
     )
 
-    output_file = Path(output_dir) / (Path(input_path).stem + ".pdf")
-    return str(output_file)
+    convert_pdf = output_dir / (inputPath.stem + '.pdf')
+    if not convert_pdf.exists():
+        raise RuntimeError(
+            "LibreOffice did not produce a PDF file for the DOCX conversion."
+        )
+
+    if not convert_pdf != output_dir:
+        convert_pdf.replace(outputPath)
+
+    return str(outputPath)
+
+
+
+def excel_to_pdf(inputFile: str, outputFile: str):
+    input_path = Path(inputFile)
+    output_path = Path(outputFile)
+
+    return convert_with_libreoffice(input_path, output_path)
+
+

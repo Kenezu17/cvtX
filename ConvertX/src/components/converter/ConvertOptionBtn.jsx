@@ -5,7 +5,7 @@ const options = [
   { label: 'DOCX', value: 'docx' },
   { label: 'JPG', value: 'jpg' },
   { label: 'PNG', value: 'png' },
-  { label: 'Excel', value: 'excel' },
+  { label: 'Excel', value: 'xlsx' },
   { label: 'CSV', value: 'csv' },
 ]
 
