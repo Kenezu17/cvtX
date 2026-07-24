@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def csv_to_xl(inputFile: str, filename: str):
     df = pd.read_csv(inputFile)
 

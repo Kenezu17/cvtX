@@ -46,11 +46,9 @@ def pdf_to_excel(inputFile: str, output_file: str):
             for page in pdf.pages:
                 tables = page.extract_tables()  
 
-              
-
                 for table in tables:
                     if table and len(table) > 1:
-                        table_found = True  # <-- Mark that a table was found
+                        table_found = True 
 
                         df = pd.DataFrame(table[1:], columns=table[0])
                         df.to_excel(
@@ -59,7 +57,6 @@ def pdf_to_excel(inputFile: str, output_file: str):
                             index=False,
                         )
                         sheet += 1
-
                 if not tables:
                  raise ValueError("Doesnt have a table!" )
                  break

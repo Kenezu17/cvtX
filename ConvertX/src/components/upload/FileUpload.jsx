@@ -66,7 +66,7 @@ export default function FileUpload() {
       docx: 'word',
       jpg: 'image',
       png: 'image',
-      excel: 'excel',
+      xlsx: 'excel',
       csv: 'csv',
     }
 

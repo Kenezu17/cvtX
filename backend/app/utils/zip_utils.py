@@ -1,6 +1,10 @@
 from pathlib import Path
 import zipfile
 
+# BASEDIR = Path(__file__).resolve().parent.parent
+
+# OUTPUT = BASEDIR / 'output'
+
 def zip_folder(folder_path:str, zip_path:str):
     folder = Path(folder_path)
     zip_file = Path(zip_path)

@@ -37,7 +37,6 @@ def convert_with_libreoffice(inputPath: str, outputPath: str):
     return str(outputPath)
 
 
-
 def excel_to_pdf(inputFile: str, outputFile: str):
     input_path = Path(inputFile)
     output_path = Path(outputFile)

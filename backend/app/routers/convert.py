@@ -27,7 +27,6 @@ CONVERTER = {
     ('.pdf', 'png'): pdf_to_image,
     ('.pdf', 'jpg'): pdf_to_jpg,
     ('.pdf', 'xlsx'): pdf_to_excel,
-    ('.pdf', 'excel'): pdf_to_excel,
 
     ('.docx','pdf'): docx_to_pdf,
 
@@ -36,7 +35,6 @@ CONVERTER = {
     ('.png', 'pdf'): image_to_pdf,
 
     ('.csv','xlsx'): csv_to_xl,
-
     ('.xlsx','pdf'): excel_to_pdf
 }
 
