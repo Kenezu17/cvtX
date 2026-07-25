@@ -117,7 +117,6 @@ VITE_API_URL=http://localhost:8000
 |--------|--------|
 | PDF | DOCX |
 | DOCX | PDF |
-| JPG | PNG |
 | JPG/PNG | PDF |
 | CSV | XLSX |
 | XLSX | PDF |
