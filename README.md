@@ -1,4 +1,4 @@
-[ConvertX-website-kenezu17s-projects.vercel.app](https://cvt-9qmkcbo9z-kenezu17s-projects.vercel.app/)]
+[ConvertX-website-kenezu17s-projects.vercel.app](https://cvt-x.vercel.app/)]
 
 # ConvertX
 
