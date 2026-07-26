@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 
+import APIURL from "../../services/api";
 import { validateSize, validateType } from "../../utils/fileValidation";
 import { FILE_TYPES } from "../../utils/fileTypes";
 import { DownlaodFile } from "../../utils/DownloadFile";
@@ -10,9 +11,6 @@ import ConvertOptionBtn from "../converter/ConvertOptionBtn";
 import ProgressBar from "./ProgressBar";
 import DownloadBtn from "../converter/DownloadBtn";
 import ErrorMessage from "../ErrorMessage";
-
-const APIURL =  import.meta.env.VITE_APIURL
-console.log(APIURL)
 
 export default function FileUpload() {
   const [file, setFile] = useState(null);
