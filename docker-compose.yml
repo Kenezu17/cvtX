@@ -5,10 +5,10 @@ services:
     ports:
       - "5000:5000"
     volumes:
-       - ./backend/app/uploads:/app/app/uploads  
-       - ./backend/app/output:/app/app/output  
-    environment:
-      - SOFFICE_PATH=soffice
+      - ./backend/app/uploads:/app/app/uploads
+      - ./backend/app/output:/app/app/output
+    env_file:
+      - ./backend/.env
     restart: unless-stopped
   
   frontend:
@@ -21,6 +21,8 @@ services:
       - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:5000
+    env_file:
+      - ./ConvertX/.env
     restart: unless-stopped
     depends_on: 
       - backend

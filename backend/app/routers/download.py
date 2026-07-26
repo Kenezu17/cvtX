@@ -1,7 +1,9 @@
 from pathlib import Path
-from fastapi import APIRouter, HTTPException,BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
 from fastapi.responses import FileResponse
 import shutil
+
+from app.dependencies import get_api_key
 
 router = APIRouter(
     prefix="/download",
@@ -30,7 +32,7 @@ def delete_file(folder: Path):
        
 
    
-@router.get("/{filename}")
+@router.get("/{filename}", dependencies=[Depends(get_api_key)])
 async def download_file(filename: str, backgound_task: BackgroundTasks):
     safe_filename = Path(filename).name
     file_path = OUTPUT_DIR / safe_filename

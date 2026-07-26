@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 
+from app.dependencies import get_api_key
 from app.services.pdf_convert import pdf_to_docx, pdf_to_excel, pdf_to_image
 from app.services.docs_convert import docx_to_pdf
 from app.services.image_convert import image_to_pdf, pdf_to_jpg
@@ -38,7 +39,9 @@ CONVERTER = {
     ('.xlsx','pdf'): excel_to_pdf
 }
 
-@router.post("/")
+from app.dependencies import get_api_key
+
+@router.post("/", dependencies=[Depends(get_api_key)])
 async def convert_file(
     file: UploadFile = File(...),
     convert_to: str = Form(...),
