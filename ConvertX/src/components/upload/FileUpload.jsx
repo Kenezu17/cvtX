@@ -12,6 +12,7 @@ import DownloadBtn from "../converter/DownloadBtn";
 import ErrorMessage from "../ErrorMessage";
 
 const APIURL =  import.meta.env.VITE_APIURL
+console.log(APIURL)
 
 export default function FileUpload() {
   const [file, setFile] = useState(null);
