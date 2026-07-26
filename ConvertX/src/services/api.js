@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5173';
+const baseURL = import.meta.env.VITE_API_URL || ' https://cvtx.onrender.com';
 const apiKey = import.meta.env.VITE_API_KEY || '';
 
 const APIURL = axios.create({
