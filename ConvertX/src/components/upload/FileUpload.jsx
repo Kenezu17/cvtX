@@ -88,9 +88,12 @@ export default function FileUpload() {
       formData.append('file', file);
       formData.append('convert_to', toFormat);
 
-      const response = await fetch(`${baseURL}/convert`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+     const response = await fetch(`${import.meta.env.VITE_API_URL}/convert`, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+});
+
 
       setProgress(100);
       setError('');
