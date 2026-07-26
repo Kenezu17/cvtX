@@ -4,19 +4,22 @@ from pathlib import Path
 
 
 
-SOFFICE_PATH = SOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
+import os
+
+# Use environment variable `SOFFICE_PATH` when provided, otherwise rely on `soffice` in PATH.
+SOFFICE_PATH = os.environ.get("SOFFICE_PATH", "soffice")
 
 
 def _convert_with_libreoffice(input_path: Path, output_path: Path):
-    if not Path(SOFFICE_PATH).exists():
-        raise RuntimeError(
-            f"LibreOffice not found: {SOFFICE_PATH}"
-        )
+    # If SOFFICE_PATH is an absolute path, validate it. If it's a binary name, assume it's in PATH.
+    soffice_path_obj = Path(SOFFICE_PATH)
+    if soffice_path_obj.is_absolute() and not soffice_path_obj.exists():
+        raise RuntimeError(f"LibreOffice not found: {SOFFICE_PATH}")
 
     output_dir = output_path.parent
     subprocess.run(
         [
-           SOFFICE_PATH,
+            SOFFICE_PATH,
             "--headless",
             "--convert-to",
             "pdf",

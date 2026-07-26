@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    container_name: convertx_backend
+    ports:
+      - "5000:5000"
+    volumes:
+       - ./backend/app/uploads:/app/app/uploads  
+       - ./backend/app/output:/app/app/output  
+    environment:
+      - SOFFICE_PATH=soffice
+    restart: unless-stopped
+  
+  frontend:
+    build: ./ConvertX
+    container_name: convertx_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./ConvertX:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    restart: unless-stopped
+    depends_on: 
+      - backend

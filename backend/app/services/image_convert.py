@@ -16,12 +16,12 @@ def image_to_pdf(input_file: str, output_file: str):
     return output_file
 
 
-def jpg_to_png(input_file: str, output_file: str):
-    image = Image.open(input_file)
-    image.save(output_file, "PNG")
-    image.close()
+# def jpg_to_png(input_file: str, output_file: str):
+#     image = Image.open(input_file)
+#     image.save(output_file, "PNG")
+#     image.close()
 
-    return output_file
+#     return output_file
 
 def pdf_to_jpg(input_file: str, output_dir: str):
     pdf = fitz.open(input_file)

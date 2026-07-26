@@ -2,6 +2,7 @@ import time
 from pathlib import Path
 import shutil
 import asyncio
+import logging
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +33,7 @@ def clean_up():
                         shutil.rmtree(file)
 
             except Exception as e:
-                print(f'Failed to delete after the expiration {str(e)}')
+              logging.error(f'Failed to delete after the expiration {str(e)}')
 
 async def clean_worker():
     while True:

@@ -1,15 +1,16 @@
 import shutil
 import subprocess
 from pathlib import Path
+import os 
 
-SOFFICE_PATH = SOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
+
+SOFFICE_PATH = os.environ.get('SOFFICE_PATH', 'soffice' )
 
 def convert_with_libreoffice(inputPath: str, outputPath: str):
-    if not Path(SOFFICE_PATH).exists():
-        raise RuntimeError(
-            f"LibreOffice not found: {SOFFICE_PATH}"
-        )
-
+    sooffice_path_ojc = Path(SOFFICE_PATH)
+    if sooffice_path_ojc.is_absolute()and not sooffice_path_ojc.exists():
+        raise RuntimeError(f"LibreOffice not found: {SOFFICE_PATH}")
+     
     output_dir = outputPath.parent
 
     subprocess.run(

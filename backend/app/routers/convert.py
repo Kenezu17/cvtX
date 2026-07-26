@@ -13,7 +13,7 @@ from app.utils.zip_utils import zip_folder
 
 router = APIRouter(prefix="/convert", tags=["Convert"])
 
-# Resolve the absolute path to the backend directory root
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 UPLOAD_DIR = BASE_DIR / "uploads"
 OUTPUT_DIR = BASE_DIR / "output"
