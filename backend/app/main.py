@@ -24,9 +24,10 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    'http://localhost:5173',
-    'https:// cvt-nc2msir2y-kenezu17s-projects.vercel.app'
-     ],
+        'http://localhost:5173',
+        'https://cvt-x.vercel.app',
+        'https://cvt-nc2msir2y-kenezu17s-projects.vercel.app'
+    ],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*']
