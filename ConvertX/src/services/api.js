@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || ' https://cvtx.onrender.com';
+const baseURL = import.meta.env.VITE_API_URL || 'https://cvtx.onrender.com';
 const apiKey = import.meta.env.VITE_API_KEY || '';
+
+if (!apiKey) {
+    console.warn('VITE_API_KEY is not set. Requests will be sent without Authorization header.');
+}
 
 const APIURL = axios.create({
     baseURL,
