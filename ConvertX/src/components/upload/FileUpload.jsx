@@ -12,6 +12,8 @@ import ProgressBar from "./ProgressBar";
 import DownloadBtn from "../converter/DownloadBtn";
 import ErrorMessage from "../ErrorMessage";
 
+const baseURL =  import.meta.env.VITE_API_URL
+
 export default function FileUpload() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState('')
@@ -86,7 +88,7 @@ export default function FileUpload() {
       formData.append('file', file);
       formData.append('convert_to', toFormat);
 
-      const response = await fetch(`${APIURL}/convert`, formData, {
+      const response = await fetch(`${baseURL}/convert`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
