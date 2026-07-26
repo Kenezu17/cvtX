@@ -27,7 +27,7 @@ app.add_middleware(
         'http://localhost:5173',
         'https://cvt-x.vercel.app',
         'https://cvt-nc2msir2y-kenezu17s-projects.vercel.app',
-       ' https://cvt-9gmkcbo9z-kenezu17s-projects.vercel.app'
+       ' https://cvt-dmwglbh8d-kenezu17s-projects.vercel.app'
     ],
     allow_credentials=True,
     allow_methods=['*'],
